@@ -4,6 +4,8 @@ html, body, .root {
 
 body {
   line-height: 1.5;
+  color: rgba(0, 0, 0, .8);
+
 }
 
 body, .app {
@@ -12,16 +14,24 @@ body, .app {
 
 /* main page */
 
+h2 {
+  width: 100%;
+}
+
+.underline {
+  border-bottom: 1px solid #ccc;
+}
+
 .list-books-title {
   padding: 10px 0;
-  background: #2e7c31;
+  background: #fbbc05;
   text-align: center;
+  border-bottom: 4px solid #373737;
 }
 
 .list-books-title h1 {
   font-weight: 400;
   margin: 0;
-  color: white;
 }
 
 .list-books-content {
@@ -58,7 +68,7 @@ body, .app {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #2e7d32;
+  background: #fbbc05;
   background-image: url('./icons/add.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -140,6 +150,7 @@ button:active {
 
 .book {
   width: 140px;
+  margin: 10px
 }
 
 .book-title,
@@ -169,7 +180,7 @@ button:active {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #60ac5d;
+  background: #e4aa00;
   background-image: url('./icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -195,4 +206,31 @@ button:active {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+.stars {
+  color: #fbbc05;
+}
+
+.stars-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006"
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005"
 }
