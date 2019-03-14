@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from './data/BooksAPI';
 import Book from './components/Book';
+import DebounceInput from 'react-debounce-input';
 
 
 class Search extends React.PureComponent<Props> {
@@ -25,6 +26,7 @@ class Search extends React.PureComponent<Props> {
 
   changeHandler(event) {
     const search = event.target.value;
+    let temp = ''
 
     this.setState({search});
 
@@ -32,6 +34,11 @@ class Search extends React.PureComponent<Props> {
       BooksAPI.search(search.trim()).then(searchResults => {
         if(!searchResults.error) {
           if (searchResults.length > 0) {
+            searchResults.map(res => (
+                temp = this.props.compare.find(item => item.id === res.id),
+                res.shelf = typeof temp === 'undefined' ? 'none' : temp.shelf
+              )
+            )
             this.setState(() => (
               {searchResults: searchResults}
             ))
@@ -45,6 +52,9 @@ class Search extends React.PureComponent<Props> {
   }
 
   render() {
+
+    let updatedBooks =  this.state.searchResults
+
     return (
       /*
         Search
@@ -60,24 +70,27 @@ class Search extends React.PureComponent<Props> {
 
           <div className="search-books-input-wrapper">
           <form>
-          <input type="text"
+          <DebounceInput
+            debounceTimeout={300}
+            type="text"
             value={this.state.search}
             onChange={this.changeHandler}
-            placeholder="Search by title or author"
-          />
+            placeholder="Search by title or author" />
           </form>
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          {this.state.searchResults.length > 0 && this.state.searchResults.map((book, index) => (
-            <Book
-              key={index}
-              name='selectOption'
-              book={book}
-              select={this.props.selected}
-              selectOption={book.shelf === 'undefined' ? book.shelf : 'none'}
-            />
+          {
+            updatedBooks.length > 0 && updatedBooks
+              .map((book, index) => (
+              <Book
+                key={book.id}
+                name='selectOption'
+                book={book}
+                select={this.props.selected}
+                selectOption={book.shelf}
+              />
 
           ))
         }

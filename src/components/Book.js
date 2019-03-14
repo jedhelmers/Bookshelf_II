@@ -3,9 +3,14 @@ import React from 'react'
 function Stars(props) {
   return (
     <span>
-      <div className="stars stars-outer">
-        <div className="stars-inner" style={{ width: (props.averageRating * 10) }}></div>
-      </div>
+      {props.averageRating > 0 ? (
+        <div className="stars stars-outer">
+          <div className="stars-inner" style={{ width: (props.averageRating * 10) }}></div>
+        </div>
+      ) : (
+        <div className='stars help'>No Rating</div>
+      )
+    }
     </span>
   )
 }
@@ -24,9 +29,10 @@ function Authors(props) {
 }
 
 function Book(props) {
-  
-  const { authors, averageRating, title, subtitle, keys, id, shelf, imageLinks } = props.book
+
+  let { authors, averageRating, title, subtitle, keys, id, shelf, imageLinks } = props.book
   const thumb = (typeof imageLinks === 'undefined') ? null : `url(${imageLinks['thumbnail']})`
+  averageRating = (typeof averageRating === 'undefined') ? 0 : averageRating
 
   return (
       <div className="book">

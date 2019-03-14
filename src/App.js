@@ -66,6 +66,7 @@ class BooksApp extends React.Component {
             <Search
               results={this.state.searchResults}
               selected={this.moveBookHandler}
+              compare={this.state.books}
             />
           )}
           />
